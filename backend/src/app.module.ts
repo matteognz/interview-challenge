@@ -3,16 +3,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SampleModule } from './sample/sample.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PatientModule } from './modules/patient/patient.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'database.sqlite',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/modules/**/entity/*.entity{.ts,.js}'],
       synchronize: true,
+      logging: true,
     }),
     SampleModule,
+    PatientModule,
   ],
   controllers: [AppController],
   providers: [AppService],
