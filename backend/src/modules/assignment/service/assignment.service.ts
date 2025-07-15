@@ -93,6 +93,12 @@ export class AssignmentService {
   async findByPatientWithRemainingDays(
     patientId: number,
   ): Promise<Assignment[]> {
+    const patient = await this.patientRepository.findOne({
+      where: { id: patientId },
+    });
+    if (!patient) {
+      throw new NotFoundException(`Patient with id ${patientId} not found`);
+    }
     const assignments = await this.assignmentRepository.find({
       where: { patient: { id: patientId } },
       relations: ['patient', 'medication'],
