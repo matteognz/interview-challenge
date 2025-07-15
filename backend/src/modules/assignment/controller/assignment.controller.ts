@@ -61,4 +61,11 @@ export class AssignmentController {
   remainingDays(@Param('id', ParseIntPipe) id: number) {
     return this.assignmentService.calculateRemainingDays(id);
   }
+
+  @Get('patient/:patientId')
+  async getAssignmentsByPatient(
+    @Param('patientId', ParseIntPipe) patientId: number,
+  ) {
+    return this.assignmentService.findByPatientWithRemainingDays(patientId);
+  }
 }

@@ -87,6 +87,25 @@ export class AssignmentService {
 
   async calculateRemainingDays(id: number): Promise<number> {
     const assignment = await this.findOne(id);
+    return this.calculateRemainingDaysFromAssignment(assignment);
+  }
+
+  async findByPatientWithRemainingDays(
+    patientId: number,
+  ): Promise<Assignment[]> {
+    const assignments = await this.assignmentRepository.find({
+      where: { patient: { id: patientId } },
+      relations: ['patient', 'medication'],
+    });
+    return assignments.map((assignment) => {
+      return {
+        ...assignment,
+        remainingDays: this.calculateRemainingDaysFromAssignment(assignment),
+      };
+    });
+  }
+
+  private calculateRemainingDaysFromAssignment(assignment: Assignment): number {
     const today = new Date();
     const startDate = new Date(assignment.startDate);
     const endDate = new Date(startDate);
