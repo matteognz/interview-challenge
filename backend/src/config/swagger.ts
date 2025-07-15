@@ -8,6 +8,7 @@ export function setupSwagger(app: INestApplication) {
     .setVersion('1.0')
     .addTag('patients')
     .addTag('medications')
+    .addTag('assignments')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
