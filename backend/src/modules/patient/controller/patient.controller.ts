@@ -7,6 +7,8 @@ import {
   Delete,
   ParseIntPipe,
   Put,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { PatientService } from '../service/patient.service';
 import { CreatePatientDto } from '../dto/create-patient.dto';
@@ -20,6 +22,7 @@ export class PatientController {
   @ApiOperation({ summary: 'Create new patient' })
   @ApiResponse({ status: 201, description: 'New patient created successfully' })
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() dto: CreatePatientDto) {
     return this.patientService.create(dto);
   }
@@ -27,6 +30,7 @@ export class PatientController {
   @ApiOperation({ summary: 'Retrieve all patients' })
   @ApiResponse({ status: 200, description: 'List of all patients' })
   @Get()
+  @HttpCode(HttpStatus.OK)
   findAll() {
     return this.patientService.findAll();
   }
@@ -34,6 +38,7 @@ export class PatientController {
   @ApiOperation({ summary: 'Retrieve patient by id' })
   @ApiResponse({ status: 200, description: 'Patient found' })
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.patientService.findOne(id);
   }
@@ -44,6 +49,7 @@ export class PatientController {
     description: 'Patient updated successfully',
   })
   @Put(':id')
+  @HttpCode(HttpStatus.OK)
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: Partial<CreatePatientDto>,
@@ -57,6 +63,7 @@ export class PatientController {
     description: 'Patient deleted successfully',
   })
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.patientService.remove(id);
   }

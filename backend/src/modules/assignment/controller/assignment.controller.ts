@@ -7,6 +7,8 @@ import {
   Delete,
   ParseIntPipe,
   Put,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { AssignmentService } from '../service/assignment.service';
 import { CreateAssignmentDto } from '../dto/create-assignment.dto';
@@ -20,6 +22,7 @@ export class AssignmentController {
   @ApiOperation({ summary: 'Create a new assignment' })
   @ApiResponse({ status: 201, description: 'Assignment created' })
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() dto: CreateAssignmentDto) {
     return this.assignmentService.create(dto);
   }
@@ -27,6 +30,7 @@ export class AssignmentController {
   @ApiOperation({ summary: 'Get all assignments' })
   @ApiResponse({ status: 200, description: 'List of assignments' })
   @Get()
+  @HttpCode(HttpStatus.OK)
   findAll() {
     return this.assignmentService.findAll();
   }
@@ -34,6 +38,7 @@ export class AssignmentController {
   @ApiOperation({ summary: 'Get assignment by id' })
   @ApiResponse({ status: 200, description: 'Assignment found' })
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.assignmentService.findOne(id);
   }
@@ -41,6 +46,7 @@ export class AssignmentController {
   @ApiOperation({ summary: 'Update assignment by id' })
   @ApiResponse({ status: 200, description: 'Assignment updated successfully' })
   @Put(':id')
+  @HttpCode(HttpStatus.OK)
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: CreateAssignmentDto,
@@ -51,6 +57,7 @@ export class AssignmentController {
   @ApiOperation({ summary: 'Delete assignment by id' })
   @ApiResponse({ status: 204, description: 'Assignment deleted' })
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.assignmentService.remove(id);
   }
@@ -58,11 +65,15 @@ export class AssignmentController {
   @ApiOperation({ summary: 'Get remaining days of treatment' })
   @ApiResponse({ status: 200, description: 'Remaining days returned' })
   @Get(':id/remainingDays')
+  @HttpCode(HttpStatus.OK)
   remainingDays(@Param('id', ParseIntPipe) id: number) {
     return this.assignmentService.calculateRemainingDays(id);
   }
 
+  @ApiOperation({ summary: 'Get all patient assignments by patientId' })
+  @ApiResponse({ status: 200, description: 'List of patient assignments' })
   @Get('patient/:patientId')
+  @HttpCode(HttpStatus.OK)
   async getAssignmentsByPatient(
     @Param('patientId', ParseIntPipe) patientId: number,
   ) {
