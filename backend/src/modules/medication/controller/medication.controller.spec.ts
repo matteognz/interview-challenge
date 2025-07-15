@@ -53,6 +53,8 @@ describe('MedicationController', () => {
         dosage: 1,
         frequency: 1,
         createdAt: new Date(),
+        updatedAt: new Date(),
+        assignments: [],
       },
     ];
     mockService.findAll!.mockResolvedValue(mockMedications);
@@ -81,6 +83,8 @@ describe('MedicationController', () => {
       dosage: 1,
       frequency: 1,
       createdAt: new Date(),
+      updatedAt: new Date(),
+      assignments: [],
     };
     mockService.update!.mockResolvedValue(updatedMedication);
 
