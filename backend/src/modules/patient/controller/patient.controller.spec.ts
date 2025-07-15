@@ -35,7 +35,7 @@ describe('PatientController', () => {
   it('should call service.create with correct data', async () => {
     const dto: CreatePatientDto = {
       name: 'Matteo Gonzi',
-      dateOfBirth: '1999-06-01',
+      dateOfBirth: new Date('1999-06-01'),
     };
 
     await controller.create(dto);
@@ -49,8 +49,10 @@ describe('PatientController', () => {
       {
         id: 1,
         name: 'Matteo Gonzi',
-        dateOfBirth: '1999-06-01',
+        dateOfBirth: new Date('1999-06-01'),
         createdAt: new Date(),
+        updatedAt: new Date(),
+        assignments: [],
       },
     ];
     mockService.findAll!.mockResolvedValue(mockPatients);
@@ -76,8 +78,10 @@ describe('PatientController', () => {
     const updatedPatient = {
       id,
       name: 'Matteo Gonzi Updated',
-      dateOfBirth: '1999-06-01',
+      dateOfBirth: new Date('1999-06-01'),
       createdAt: new Date(),
+      updatedAt: new Date(),
+      assignments: [],
     };
     mockService.update!.mockResolvedValue(updatedPatient);
 
