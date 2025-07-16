@@ -46,4 +46,19 @@ export class MedicationService {
       throw new NotFoundException(`Medication with id ${id} not found`);
     }
   }
+
+  async findAssignmentsByMedicationId(medicationId: number) {
+    const medication = await this.medicationRepository.findOne({
+      where: { id: medicationId },
+      relations: ['assignments', 'assignments.patient'],
+    });
+
+    if (!medication) {
+      throw new NotFoundException(
+        `Medication with ID ${medicationId} not found`,
+      );
+    }
+
+    return medication.assignments;
+  }
 }

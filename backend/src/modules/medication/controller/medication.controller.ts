@@ -64,4 +64,15 @@ export class MedicationController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.medicationService.remove(id);
   }
+
+  @ApiOperation({ summary: 'Get all medication assignments by medicationId' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all medication assignments found by medicationId',
+  })
+  @Get(':id/assignments')
+  @HttpCode(HttpStatus.OK)
+  async getAssignmentsForMedication(@Param('id', ParseIntPipe) id: number) {
+    return this.medicationService.findAssignmentsByMedicationId(id);
+  }
 }
