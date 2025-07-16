@@ -1,5 +1,3 @@
-import { Type } from 'class-transformer';
-import { IsDate } from 'class-validator';
 import { Assignment } from '../../assignment/entity/assignment.entity';
 import {
   Entity,
@@ -18,8 +16,7 @@ export class Patient {
   @Column()
   name: string;
 
-  @IsDate()
-  @Type(() => Date)
+  @Column()
   dateOfBirth: Date;
 
   @OneToMany(() => Assignment, (assignment) => assignment.patient)
