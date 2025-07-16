@@ -35,6 +35,17 @@ export class PatientController {
     return this.patientService.findAll();
   }
 
+  @ApiOperation({ summary: 'Retrieve all patients with assignment count' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all patients with assignment count',
+  })
+  @Get('/withAssignmentCount')
+  @HttpCode(HttpStatus.OK)
+  async getPatientsWithAssignmentCount() {
+    return this.patientService.findAllWithAssignmentCount();
+  }
+
   @ApiOperation({ summary: 'Retrieve patient by id' })
   @ApiResponse({ status: 200, description: 'Patient found' })
   @Get(':id')

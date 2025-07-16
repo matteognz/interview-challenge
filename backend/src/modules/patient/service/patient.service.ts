@@ -36,4 +36,12 @@ export class PatientService {
   async remove(id: number): Promise<void> {
     await this.patientRepository.delete(id);
   }
+
+  async findAllWithAssignmentCount() {
+    return this.patientRepository
+      .createQueryBuilder('patient')
+      .leftJoin('patient.assignments', 'assignment')
+      .loadRelationCountAndMap('patient.assignmentCount', 'patient.assignments')
+      .getMany();
+  }
 }
