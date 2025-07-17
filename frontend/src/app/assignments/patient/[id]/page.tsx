@@ -1,18 +1,12 @@
 import { notFound } from 'next/navigation';
 import { getAssignmentsByPatientId } from '../../../../services/assignmentService';
-import { formatDate } from '../../../../utils/dateUtil';
+import { calculateEndDate, formatDate } from '../../../../utils/dateUtil';
 import { ClipboardList, Pill } from 'lucide-react';
 import Link from 'next/link';
 
 type PatientAssignmentsProps = {
   params: { id: string };
 };
-
-function calculateEndDate(startDate: string, numberOfDays: number): string {
-  const start = new Date(startDate);
-  start.setDate(start.getDate() + numberOfDays);
-  return start.toISOString();
-}
 
 export default async function PatientAssignmentsPage({ params }: PatientAssignmentsProps) {
   const id = parseInt(params?.id);
