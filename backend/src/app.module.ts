@@ -14,7 +14,7 @@ import { AssignmentModule } from './modules/assignment/assignment.module';
       database: 'database.sqlite',
       entities: [__dirname + '/modules/**/entity/*.entity{.ts,.js}'],
       synchronize: true,
-      logging: true,
+      logging: process.env.NODE_ENV !== 'production',
     }),
     SampleModule,
     PatientModule,
