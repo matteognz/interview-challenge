@@ -13,7 +13,7 @@ export default async function PatientDetailPage({ params }: PatientDetailPagePro
   if (!patient) return notFound();
 
   return (
-    <main className="max-w-4xl mx-auto p-6">
+    <main className="max-w-5xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-blue-700 mb-4">Patient Details</h1>
       <div className="bg-white shadow-md rounded-2xl border p-6 space-y-4">
         <div>
