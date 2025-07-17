@@ -40,53 +40,55 @@ export default function Home() {
       </header>
 
       <section className="bg-white border border-blue-100 rounded-2xl shadow-md overflow-hidden">
-        <table className="w-full table-auto border-collapse text-sm md:text-base">
-          <thead className="bg-blue-50 text-blue-800">
-            <tr>
-              <th className="px-4 py-3 text-left font-semibold border-b border-blue-200">Name</th>
-              <th className="px-4 py-3 text-left font-semibold border-b border-blue-200">Date of Birth</th>
-              <th className="px-4 py-3 text-center font-semibold border-b border-blue-200">Assignments</th>
-            </tr>
-          </thead>
-          <tbody>
-            {patients && patients.length > 0 ? (
-              patients.map((patient, idx) => (
-                <tr
-                  key={patient.id}
-                  className={idx % 2 === 0 ? 'bg-blue-50/20' : 'bg-white'}
-                >
-                  <td className="px-4 py-3 border-b text-gray-800">
-                    <div className="flex items-center gap-2">
-                      <Link
-                        href={`/patients/${patient.id}`}
-                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition cursor-pointer"
-                        title="View patient details"
-                      >
-                        <UserCircle className="w-7 h-7" />
-                        <span>{patient.name}</span>
-                      </Link>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 border-b text-gray-700">{formatDate(patient.dateOfBirth)}</td>
-                  <td className="px-4 py-3 text-center border-b">
-                    <Link
-                      href={`/assignments/patient/${patient.id}`}
-                      className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition cursor-pointer"
-                      title="View patient assignments"
-                    >
-                      <ClipboardPen className="w-6 h-6" />
-                      {patient.assignmentCount}
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse text-sm md:text-base">
+            <thead className="bg-blue-50 text-blue-800">
               <tr>
-                <td colSpan={3} className="px-4 py-6 text-center text-gray-500">No patients registered</td>
+                <th className="px-4 py-3 text-left font-semibold border-b border-blue-200">Name</th>
+                <th className="px-4 py-3 text-left font-semibold border-b border-blue-200">Date of Birth</th>
+                <th className="px-4 py-3 text-center font-semibold border-b border-blue-200">Assignments</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {patients && patients.length > 0 ? (
+                patients.map((patient, idx) => (
+                  <tr
+                    key={patient.id}
+                    className={idx % 2 === 0 ? 'bg-blue-50/20' : 'bg-white'}
+                  >
+                    <td className="px-4 py-3 border-b text-gray-800">
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/patients/${patient.id}`}
+                          className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition cursor-pointer"
+                          title="View patient details"
+                        >
+                          <UserCircle className="w-7 h-7" />
+                          <span>{patient.name}</span>
+                        </Link>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 border-b text-gray-700">{formatDate(patient.dateOfBirth)}</td>
+                    <td className="px-4 py-3 text-center border-b">
+                      <Link
+                        href={`/assignments/patient/${patient.id}`}
+                        className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition cursor-pointer"
+                        title="View patient assignments"
+                      >
+                        <ClipboardPen className="w-6 h-6" />
+                        {patient.assignmentCount}
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={3} className="px-4 py-6 text-center text-gray-500">No patients registered</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </section>
     </main>
   );
