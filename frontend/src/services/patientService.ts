@@ -13,7 +13,7 @@ export async function getPatientById(id: number): Promise<Patient | null> {
 }
 
 export async function getPatientsWithAssignmentCount(): Promise<PatientWithAssignmentCount[]> {
-  const response = await apiClient.get<PatientWithAssignmentCount[]>('/patients/withAssignmentCount');
+  const response = await apiClient.get('/patients/withAssignmentCount');
   return response.data;
 }
 

@@ -7,7 +7,7 @@ type PatientDetailPageProps = {
 };
 
 export default async function PatientDetailPage({ params }: PatientDetailPageProps) {
-  const id = parseInt(params.id);
+  const id = parseInt(params?.id);
   const patient = await getPatientById(id);
 
   if (!patient) return notFound();

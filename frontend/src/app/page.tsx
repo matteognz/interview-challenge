@@ -4,7 +4,7 @@ import { formatDate } from '../utils/dateUtil';
 import { getPatientsWithAssignmentCount } from '../services/patientService';
 import { useApi } from '../hooks/useApi';
 import { ClipboardPen, Stethoscope, UserCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Home() {
   const {
@@ -12,8 +12,6 @@ export default function Home() {
     loading,
     error,
   } = useApi(getPatientsWithAssignmentCount, true);
-
-  const router = useRouter();
 
   if (loading) {
     return (
@@ -59,26 +57,26 @@ export default function Home() {
                 >
                   <td className="px-4 py-3 border-b text-gray-800">
                     <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => router.push(`/patients/${patient.id}`)}
-                        className="text-blue-600 hover:text-blue-800 transition cursor-pointer"
+                      <Link
+                        href={`/patients/${patient.id}`}
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition cursor-pointer"
                         title="View patient details"
                       >
                         <UserCircle className="w-7 h-7" />
-                      </button>
-                      <span onClick={() => router.push(`/patients/${patient.id}`)}>{patient.name}</span>
+                        <span>{patient.name}</span>
+                      </Link>
                     </div>
                   </td>
                   <td className="px-4 py-3 border-b text-gray-700">{formatDate(patient.dateOfBirth)}</td>
                   <td className="px-4 py-3 text-center border-b">
-                    <button
-                      onClick={() => console.log(`Clicked on patient ${patient.id}`)}
+                    <Link
+                      href={`/assignments/patient/${patient.id}`}
                       className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-semibold bg-green-100 text-green-800 rounded-full hover:bg-green-200 transition cursor-pointer"
                       title="View patient assignments"
                     >
                       <ClipboardPen className="w-6 h-6" />
                       {patient.assignmentCount}
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))
