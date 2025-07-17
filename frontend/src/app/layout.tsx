@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import { Sidebar } from "../components/Sidebar";
+import BackButton from "../components/BackButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,8 @@ export default function RootLayout({
         <div className="flex h-screen">
           <Sidebar />
           <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
-          {children}
+            {children}
+            <BackButton/>
           </main>
         </div>
       </body>
