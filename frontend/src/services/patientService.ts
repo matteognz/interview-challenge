@@ -7,6 +7,11 @@ export async function getPatients(): Promise<Patient[]> {
   return response.data;
 }
 
+export async function getPatientById(id: number): Promise<Patient | null> {
+  const response = await apiClient.get(`/patients/${id}`);
+  return response.data;
+}
+
 export async function getPatientsWithAssignmentCount(): Promise<PatientWithAssignmentCount[]> {
   const response = await apiClient.get<PatientWithAssignmentCount[]>('/patients/withAssignmentCount');
   return response.data;
