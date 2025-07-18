@@ -2,11 +2,9 @@ import { ClipboardList } from 'lucide-react';
 import EditAssignmentForm from './EditAssignmentForm';
 import { getAssignmentById } from '@/src/services/assignmentService';
 
-type EditAssignmentPageProps = {
-  params: { id: string };
-};
+type Params = { id: string };
 
-export default async function EditAssignmentPage({ params }: EditAssignmentPageProps ) {
+export default async function EditAssignmentPage({ params }: { params: Params } ) {
   const id = parseInt(params?.id);
   const assignment = await getAssignmentById(id);
 
