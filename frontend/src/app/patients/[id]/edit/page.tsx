@@ -2,7 +2,11 @@ import { UserCircle } from 'lucide-react';
 import { getPatientById } from '@/src/services/patientService';
 import EditPatientForm from './EditPatientForm';
 
-export default async function EditPatientPage({ params }: { params: { id: string } }) {
+type EditPatientPageProps = {
+  params: { id: string };
+};
+
+export default async function EditPatientPage({ params }: EditPatientPageProps ) {
   const id = parseInt(params?.id);
   const patient = await getPatientById(id);
 

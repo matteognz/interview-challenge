@@ -2,7 +2,11 @@ import { getMedicationById } from '../../../../services/medicationService';
 import { Pill } from 'lucide-react';
 import EditMedicationForm from './EditMedicationForm';
 
-export default async function EditMedicationPage({ params }: { params: { id: string } }) {
+type EditMedicationPageProps = {
+  params: { id: string };
+};
+
+export default async function EditMedicationPage({ params }: EditMedicationPageProps) {
   const id = parseInt(params?.id);
   const medication = await getMedicationById(id);
 
