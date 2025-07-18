@@ -1,6 +1,7 @@
 import { Assignment } from '../types/assignment';
 import { apiClient } from '../lib/axios';
 import { AssignmentWithRemainingDays } from '../types/assignmentWithRemainingDays';
+import { CreateUpdateAssignment } from '../types/createUpdateAssignment';
 
 export async function getAllAssignments(): Promise<Assignment[]> {
   const response = await apiClient.get('/assignments');
@@ -17,12 +18,12 @@ export async function getAssignmentsByPatientId(patientId: number): Promise<Assi
   return response.data;
 }
 
-export async function createAssignment(data: Omit<Assignment, 'id'>): Promise<Assignment> {
+export async function createAssignment(data: Omit<CreateUpdateAssignment, 'id'>): Promise<Assignment> {
   const response = await apiClient.post('/assignments', data);
   return response.data;
 }
 
-export async function updateAssignment(id: number, data: Omit<Assignment, 'id'>): Promise<Assignment> {
+export async function updateAssignment(id: number, data: Partial<CreateUpdateAssignment>): Promise<Assignment> {
   const response = await apiClient.put(`/assignments/${id}`, data);
   return response.data;
 }

@@ -17,7 +17,7 @@ function useDeletePatient() {
 
 export default function Home() {
   const [deletingId, setDeletingId] = useState<number | null>(null);
-  const { deletePatient, loading: deleting, error: deleteError } = useDeletePatient();
+  const { deletePat, loading: deleting, error: deleteError } = useDeletePatient();
 
   const {
     data: patients,

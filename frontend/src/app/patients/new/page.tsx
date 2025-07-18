@@ -16,6 +16,11 @@ export default function NewPatientPage() {
   const [errorPage, setErrorPage] = useState<Error | null>(null);
   
   const { execute, loading, error } = useApi(createPatient, false);
+
+  const fields = [
+    { name: 'name', label: 'Name', type: 'text' },
+    { name: 'dateOfBirth', label: 'Birth Date', type: 'date' },
+  ];
     
   const handleCreate = async (data: Partial<Patient>) => {
     try {
@@ -25,11 +30,6 @@ export default function NewPatientPage() {
       setErrorPage(error);
     };
   }
-
-  const fields = [
-    { name: 'name', label: 'Name', type: 'text' },
-    { name: 'dateOfBirth', label: 'Birth Date', type: 'date' },
-  ];
 
   return (
     <main className="max-w-5xl mx-auto p-6">

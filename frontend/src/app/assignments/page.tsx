@@ -1,13 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { ClipboardList, Pill, UserCircle } from "lucide-react";
+import { ClipboardList, Edit, Pill, PlusCircle, Trash2, UserCircle } from "lucide-react";
 import { useApi } from "../../hooks/useApi";
-import { getAllAssignments } from "../../services/assignmentService";
+import { deleteAssignment, getAllAssignments } from "../../services/assignmentService";
 import { calculateEndDate, formatDate } from "../../utils/dateUtil";
 import { RemainingDays } from "@/src/components/RemainingDays";
+import { useState } from "react";
+
+function useDeleteAssignment() {
+  const { execute, loading, error } = useApi(deleteAssignment, false);
+  const deleteAssign = async (id: number) => {
+      await execute(id);
+  };
+  return { deleteAssign, loading, error };
+}
 
 export default function AssignmentsPage() {
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const { deleteAssign, loading: deleting, error: deleteError } = useDeleteAssignment();
+  
   const {
     data: assignments,
     loading,
@@ -30,6 +42,19 @@ export default function AssignmentsPage() {
     );
   }
 
+  const handleDelete = async (id: number) => {
+    if (!confirm("Are you sure you want to delete this assignment?")) return;
+    setDeletingId(id);
+    try {
+      await deleteAssignment(id);
+      window.location.reload();
+    } catch {
+      alert("Failed to delete patient: "+ deleteError?.message);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   return (
     <main className="max-w-5xl mx-auto p-6">
       <header className="mb-8 flex items-center gap-4">
@@ -38,8 +63,15 @@ export default function AssignmentsPage() {
           <h1 className="text-3xl font-bold text-blue-700">Assignment Management</h1>
           <p className="text-gray-600 text-sm">All active and historical treatment assignments</p>
         </div>
+        <Link
+            href="/assignments/new"
+            className="ml-auto flex items-center gap-2 border border-green-600 text-green-600 hover:bg-green-100 px-4 py-2 rounded-full transition shadow-sm"
+            title="Add new assignment"
+        >
+            <PlusCircle className="w-5 h-5 text-green-600" />
+            <span className="text-green-600">Add</span>
+        </Link>
       </header>
-
       <section className="bg-white border border-blue-100 rounded-2xl shadow-md overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto border-collapse text-sm md:text-base">
@@ -50,6 +82,7 @@ export default function AssignmentsPage() {
                 <th className="px-4 py-3 text-left font-semibold border-b border-blue-200">Start Date</th>
                 <th className="px-4 py-3 text-left font-semibold border-b border-blue-200">End Date</th>
                 <th className="px-4 py-3 text-center font-semibold border-b border-blue-200">Days Left</th>
+                <th className="px-2 py-3 text-center font-semibold border-b border-blue-200 w-24">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -87,6 +120,25 @@ export default function AssignmentsPage() {
                     </td>
                     <td className="px-4 py-3 border-b text-center">
                       <RemainingDays assignmentId={assignment.id} />
+                    </td>
+                    <td className="px-2 py-3 border-b text-gray-800 text-center w-24">
+                      <div className="flex items-center justify-center gap-4">
+                      <Link
+                        href={`/assignments/${assignment.id}/edit`}
+                        className="flex items-center gap-2 text-yellow-500 hover:text-yellow-500 transition cursor-pointer"
+                        title="Edit assignment"
+                      >
+                        <Edit className="w-6 h-6 text-yellow-800" />
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(assignment.id)}
+                        disabled={deleting && deletingId === assignment.id}
+                        title="Delete assignment"
+                        className="text-red-600 hover:text-red-800 transition cursor-pointer"
+                      >
+                        <Trash2 className="w-6 h-6" />
+                      </button>
+                      </div>
                     </td>
                    </tr>
                   )
