@@ -60,3 +60,9 @@ thead {
 tbody tr:nth-child(even) {
   background-color: #f1f5f9;
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,9 +1,7 @@
-// EntityForm.tsx
 'use client';
 
 import { useState } from 'react';
 import InputField from './InputField';
-import { useRouter } from 'next/navigation';
 
 type Field = { name: string; label: string; type?: string };
 
@@ -20,7 +18,6 @@ export default function EntityForm({
 }: EntityFormProps) {
   const [formData, setFormData] = useState<Record<string, unknown>>(initialData || {});
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
@@ -35,9 +32,7 @@ export default function EntityForm({
     e.preventDefault();
     setLoading(true);
     try {
-        console.log("formData ", formData)
         await onSubmit(formData);
-        router.push('/');
     } finally {
         setLoading(false);
     }
@@ -55,11 +50,10 @@ export default function EntityForm({
           onChange={handleChange}
         />
       ))}
-
       <button
         type="submit"
         disabled={loading}
-        className="w-full mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+        className="w-full mt-4 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition cursor-pointer"
       >
         {loading ? 'Saving...' : 'Submit'}
       </button>

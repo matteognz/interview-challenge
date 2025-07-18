@@ -4,6 +4,7 @@ import { Medication } from '@/src/types/medication';
 import EntityForm from '../../../../components/form/EntityForm';
 import { useRouter } from 'next/navigation';
 import { updateMedication } from '../../../../services/medicationService';
+import { useApi } from '@/src/hooks/useApi';
 
 type EditMedicationFormProps = {
   medication: Medication;
@@ -18,9 +19,15 @@ export default function EditMedicationForm({ medication }: EditMedicationFormPro
     { name: 'frequency', label: 'Frequency', type: 'number' }
   ];
 
+  const { execute, loading, error } = useApi(updateMedication, false);
+
   const handleUpdate = async (data: Partial<Medication>) => {
-    await updateMedication(medication.id, data);
-    router.push('/medications');
+    try{
+        await execute(medication.id, data);
+        router.push('/medications');
+    } catch {} finally {
+        
+    }
   };
 
   return (
